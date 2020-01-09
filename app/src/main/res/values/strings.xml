@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GamesApp</string>
+    <string name="label_game_details">Game Details</string>
+    <string name="label_game_title">Game Title</string>
+    <string name="label_game_rating">Rating</string>
+    <string name="label_game_summary">Summary</string>
+</resources>

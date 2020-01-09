@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_card_view">8dp</dimen>
+    <dimen name="elevation_card_view">2dp</dimen>
+    <dimen name="margin_label_vertical">4dp</dimen>
+    <dimen name="margin_game_label_side">4dp</dimen>
+    <dimen name="size_game_cover_item">80dp</dimen>
+</resources>

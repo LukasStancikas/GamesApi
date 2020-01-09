@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_card_view"
+    app:cardElevation="@dimen/elevation_card_view">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/gameLabelBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="right"
+            app:constraint_referenced_ids="gameLabelContainer" />
+
+        <ImageView
+            android:id="@+id/itemGameCover"
+            android:layout_width="@dimen/size_game_cover_item"
+            android:layout_height="@dimen/size_game_cover_item"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/gameLabelContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_game_label_side"
+            android:divider="@drawable/divider_card_label"
+            android:orientation="vertical"
+            android:showDividers="middle"
+            app:layout_constraintStart_toEndOf="@+id/itemGameCover"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                style="@style/LabelStyle"
+                android:text="@string/label_game_title" />
+
+            <TextView
+                style="@style/LabelStyle"
+                android:text="@string/label_game_rating" />
+
+            <TextView
+                style="@style/LabelStyle"
+                android:text="@string/label_game_summary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_game_label_side"
+            android:divider="@drawable/divider_card_label"
+            android:orientation="vertical"
+            android:showDividers="middle"
+            app:layout_constraintStart_toEndOf="@+id/gameLabelBarrier"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/gameLabelContainer">
+
+            <TextView
+                android:id="@+id/itemGameTitle"
+                style="@style/ValueStyle"
+                tools:text="The Force Awakens" />
+
+            <TextView
+                android:id="@+id/itemGameRating"
+                style="@style/ValueStyle"
+                tools:text="5.0" />
+
+            <TextView
+                android:id="@+id/itemGameSummary"
+                style="@style/ValueStyle"
+                android:maxLines="2"
+                tools:text="very long text,very long text,very long text very long textvery long textvery long textvery long textvery long text" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
