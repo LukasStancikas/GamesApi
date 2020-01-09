@@ -13,7 +13,7 @@ import com.lukasstancikas.gamesapp.model.Game
 import kotlinx.android.synthetic.main.item_game.view.*
 
 class GameAdapter : RecyclerView.Adapter<GameAdapter.MyViewHolder>() {
-    private val items = mutableListOf<Pair<Game, Cover?>>()
+    private val items = mutableListOf<Game>()
     private var itemClickListener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(
@@ -26,15 +26,15 @@ class GameAdapter : RecyclerView.Adapter<GameAdapter.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.itemView.itemGameTitle.text = items[position].first.name
-        holder.itemView.itemGameRating.text = items[position].first.rating.toString()
-        holder.itemView.itemGameSummary.text = items[position].first.summary
+        holder.itemView.itemGameTitle.text = items[position].name
+        holder.itemView.itemGameRating.text = items[position].rating.toString()
+        holder.itemView.itemGameSummary.text = items[position].summary
         holder.itemView.setOnClickListener {
             itemClickListener?.onClick(items[position])
         }
         Glide
             .with(holder.itemView.context)
-            .load(items[position].second?.trimmedCoverUrl())
+            .load(items[position].cover?.trimmedCoverUrl())
             .placeholder(R.drawable.ic_photo)
             .error(R.drawable.ic_error)
             .centerInside()
@@ -44,7 +44,7 @@ class GameAdapter : RecyclerView.Adapter<GameAdapter.MyViewHolder>() {
 
     override fun getItemCount() = items.size
 
-    fun setItems(newItems: List<Pair<Game, Cover?>>) {
+    fun setItems(newItems: List<Game>) {
         val diffResult = DiffUtil.calculateDiff(ItemDiffCallback(items, newItems))
         items.clear()
         items.addAll(newItems)
@@ -58,17 +58,17 @@ class GameAdapter : RecyclerView.Adapter<GameAdapter.MyViewHolder>() {
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     interface OnItemClickListener {
-        fun onClick(item: Pair<Game, Cover?>)
+        fun onClick(item: Game)
     }
 
-    private class ItemDiffCallback(val oldItems: List<Pair<Game, Cover?>>, val newItems: List<Pair<Game, Cover?>>) :
+    private class ItemDiffCallback(val oldItems: List<Game>, val newItems: List<Game>) :
         DiffUtil.Callback() {
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             return oldItems[oldItemPosition] == newItems[newItemPosition]
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldItems[oldItemPosition].first.id == newItems[newItemPosition].first.id
+            return oldItems[oldItemPosition].id == newItems[newItemPosition].id
         }
 
         override fun getOldListSize(): Int {

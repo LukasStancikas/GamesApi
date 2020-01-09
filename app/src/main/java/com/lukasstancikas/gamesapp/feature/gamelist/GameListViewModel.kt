@@ -16,8 +16,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class GameListViewModel @Inject constructor(private val api: ApiController) : ViewModel() {
-    private val _dataStream: MutableLiveData<List<Pair<Game, Cover?>>> = MutableLiveData()
-    val dataStream: LiveData<List<Pair<Game, Cover?>>> = _dataStream
+    private val _dataStream: MutableLiveData<List<Game>> = MutableLiveData()
+    val dataStream: LiveData<List<Game>> = _dataStream
 
     private val _gameLoadStream = MutableLiveData<NetworkRequest>()
     val gameLoadStream: LiveData<NetworkRequest> = _gameLoadStream
@@ -37,13 +37,7 @@ class GameListViewModel @Inject constructor(private val api: ApiController) : Vi
         _gameLoadStream.postValue(NetworkRequest.Loading)
         api
             .getGames()
-            .flatMap { games ->
-                api
-                    .getCovers(games)
-                    .flatMap { covers ->
-                        pairGamesWithCovers(games, covers)
-                    }
-            }
+
             .asDriver()
             .doOnError(Timber::e)
             .doOnSuccess { _gameLoadStream.postValue(NetworkRequest.Done) }
@@ -52,18 +46,6 @@ class GameListViewModel @Inject constructor(private val api: ApiController) : Vi
                 onError = ::onLoadError
             )
             .addTo(compositeDisposable)
-    }
-
-    private fun pairGamesWithCovers(
-        games: List<Game>,
-        covers: List<Cover>
-    ): Single<List<Pair<Game, Cover?>>> {
-        return Single.fromCallable {
-            games.map { game ->
-                val possibleCover = covers.find { it.game == game.id }
-                Pair(game, possibleCover)
-            }
-        }
     }
 
     private fun onLoadError(error: Throwable) {

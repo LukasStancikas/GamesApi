@@ -53,7 +53,7 @@ class GameListFragment : Fragment(), InjectableFragment, GameAdapter.OnItemClick
         subscribeViewInteractions()
     }
 
-    override fun onClick(item: Pair<Game, Cover?>) {
+    override fun onClick(item: Game) {
         (activity as? MainActivity)?.onGameClicked(item)
     }
 

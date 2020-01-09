@@ -8,16 +8,13 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.lukasstancikas.gamesapp.R
-import com.lukasstancikas.gamesapp.model.Cover
 import com.lukasstancikas.gamesapp.model.Game
 import com.lukasstancikas.gamesapp.util.argument
-import com.lukasstancikas.gamesapp.util.nullableArgument
 import kotlinx.android.synthetic.main.fragment_game_details.*
 
 class GameDetailsFragment : Fragment() {
 
     private val game: Game by argument(KEY_GAME)
-    private val cover: Cover? by nullableArgument(KEY_COVER)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,11 +34,11 @@ class GameDetailsFragment : Fragment() {
 
     private fun showGameDetails() {
         gameDetailsSummary.text = game.summary
-        if (cover != null) {
+        if (game.cover != null) {
             gameDetailsCollapsingLayout.title = game.name
             Glide
                 .with(gameDetailsCover.context)
-                .load(cover?.trimmedCoverUrl())
+                .load(game.cover?.trimmedCoverUrl())
                 .placeholder(R.drawable.ic_photo)
                 .error(R.drawable.ic_error)
                 .centerInside()
@@ -57,13 +54,11 @@ class GameDetailsFragment : Fragment() {
     companion object {
         val TAG: String = GameDetailsFragment::class.java.name
         private const val KEY_GAME = "game"
-        private const val KEY_COVER = "cover"
 
-        fun getInstance(game: Game, cover: Cover?): GameDetailsFragment {
+        fun getInstance(game: Game): GameDetailsFragment {
             return GameDetailsFragment().apply {
                 val bundle = Bundle()
                 bundle.putParcelable(KEY_GAME, game)
-                bundle.putParcelable(KEY_COVER, cover)
                 arguments = bundle
             }
         }

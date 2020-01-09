@@ -28,13 +28,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         transaction.commit()
     }
 
-    fun onGameClicked(gameWithCover: Pair<Game, Cover?>) {
+    fun onGameClicked(game: Game) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(
-            R.id.fragmentContainer, GameDetailsFragment.getInstance(
-                gameWithCover.first,
-                gameWithCover.second
-            )
+            R.id.fragmentContainer, GameDetailsFragment.getInstance(game)
         )
         transaction.addToBackStack(GameDetailsFragment.TAG)
         transaction.commit()
