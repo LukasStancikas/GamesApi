@@ -1,7 +1,6 @@
 package com.lukasstancikas.gamesapp.network
 
 import com.lukasstancikas.gamesapp.model.Game
-import com.lukasstancikas.gamesapp.model.Keyword
 import io.reactivex.Single
 import okhttp3.RequestBody
 import retrofit2.http.Body

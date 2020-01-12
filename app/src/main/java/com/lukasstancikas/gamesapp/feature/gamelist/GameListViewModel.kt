@@ -13,7 +13,8 @@ import io.reactivex.rxkotlin.subscribeBy
 import timber.log.Timber
 import javax.inject.Inject
 
-class GameListViewModel @Inject constructor(private val repository: RepositoryController) : ViewModel() {
+class GameListViewModel @Inject constructor(private val repository: RepositoryController) :
+    ViewModel() {
     private val _dataStream: MutableLiveData<List<Game>> = MutableLiveData()
     val dataStream: LiveData<List<Game>> = _dataStream
 

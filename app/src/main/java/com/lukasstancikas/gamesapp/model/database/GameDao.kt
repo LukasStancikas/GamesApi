@@ -7,7 +7,6 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 
-
 @Dao
 interface GameDao {
     @Query("SELECT * FROM game")

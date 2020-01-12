@@ -8,8 +8,11 @@ import com.lukasstancikas.gamesapp.model.Game
 import com.lukasstancikas.gamesapp.model.Keyword
 import com.lukasstancikas.gamesapp.model.Screenshot
 
-@Database(entities = [Game::class, Cover::class, Keyword::class, Screenshot::class], version = 1, exportSchema = false)
-@TypeConverters(Converters::class)
+@Database(
+    entities = [Game::class, Cover::class, Keyword::class, Screenshot::class],
+    version = 1,
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun gameDao(): GameDao
 

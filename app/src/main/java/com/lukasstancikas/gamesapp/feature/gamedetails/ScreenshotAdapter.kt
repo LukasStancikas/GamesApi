@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.lukasstancikas.gamesapp.R
-import com.lukasstancikas.gamesapp.model.Game
 import com.lukasstancikas.gamesapp.model.Screenshot
-import kotlinx.android.synthetic.main.item_game.view.*
 import kotlinx.android.synthetic.main.item_screenshot.view.*
 
 class ScreenshotAdapter : RecyclerView.Adapter<ScreenshotAdapter.MyViewHolder>() {

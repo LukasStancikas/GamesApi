@@ -20,6 +20,6 @@ class HeaderInterceptor : Interceptor {
         private const val ACCEPT_HEADER_VALUE = "application/json"
         private const val CONTENT_TYPE_HEADER_VALUE = "application/json"
         private const val USER_KEY_KEY = "user-key"
-        private const val USER_KEY_VALUE= "bdaad8002d05210d49196af359e2725e"
+        private const val USER_KEY_VALUE = "bdaad8002d05210d49196af359e2725e"
     }
 }

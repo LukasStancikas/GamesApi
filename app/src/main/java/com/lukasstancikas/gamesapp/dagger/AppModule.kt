@@ -1,11 +1,11 @@
 package com.lukasstancikas.gamesapp.dagger
 
-import com.lukasstancikas.gamesapp.BuildConfig
-import com.lukasstancikas.gamesapp.network.HeaderInterceptor
-import com.lukasstancikas.gamesapp.network.Api
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.lukasstancikas.gamesapp.BuildConfig
+import com.lukasstancikas.gamesapp.network.Api
+import com.lukasstancikas.gamesapp.network.HeaderInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

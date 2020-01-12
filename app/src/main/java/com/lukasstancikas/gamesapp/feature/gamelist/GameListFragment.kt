@@ -12,7 +12,6 @@ import com.jakewharton.rxbinding3.swiperefreshlayout.refreshes
 import com.lukasstancikas.gamesapp.R
 import com.lukasstancikas.gamesapp.dagger.InjectableFragment
 import com.lukasstancikas.gamesapp.feature.MainActivity
-import com.lukasstancikas.gamesapp.model.Cover
 import com.lukasstancikas.gamesapp.model.Game
 import com.lukasstancikas.gamesapp.model.NetworkRequest
 import com.lukasstancikas.gamesapp.util.injectViewModel
@@ -33,6 +32,7 @@ class GameListFragment : Fragment(), InjectableFragment, GameAdapter.OnItemClick
             setOnItemClickListener(this@GameListFragment)
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
