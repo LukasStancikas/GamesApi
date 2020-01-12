@@ -9,5 +9,5 @@ data class GameAndCover(
         parentColumn = "id",
         entityColumn = "game"
     )
-    val cover: Cover?
+    var cover: Cover? = null
 )

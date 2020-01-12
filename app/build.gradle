@@ -69,6 +69,9 @@ dependencies {
     // Logging
     implementation "com.jakewharton.timber:timber:4.7.1"
 
+    // ReactiveNetwork
+    implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.6'
+
     // Dagger
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"

@@ -10,26 +10,9 @@ interface CoverDao {
     @Query("SELECT * FROM cover")
     fun getAll(): Single<List<Cover>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(covers: List<Cover>): Single<List<Long>>
-
-    @Update
-    fun updateAll(covers: List<Cover>): Completable
 
     @Delete
     fun delete(covers: List<Cover>): Completable
-
-    @Transaction
-    fun upsertAll(objList: List<Cover>) {
-        val insertResult = insertAll(objList).blockingGet()
-        val updateList = mutableListOf<Cover>()
-        for (i in insertResult.indices) {
-            if (insertResult[i] == -1L) {
-                updateList.add(objList[i])
-            }
-        }
-        if (updateList.isNotEmpty()) {
-            updateAll(updateList).blockingAwait()
-        }
-    }
 }

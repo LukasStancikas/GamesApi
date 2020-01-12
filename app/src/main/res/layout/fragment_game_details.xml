@@ -52,12 +52,39 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_game_label_side"
+                android:divider="@drawable/divider_card_label"
+                android:showDividers="middle"
                 android:orientation="vertical">
 
                 <TextView
+                    style="@style/LabelStyle"
+                    android:text="@string/label_game_summary" />
+
+                <TextView
                     android:id="@+id/gameDetailsSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    style="@style/LabelStyle"
+                    android:text="@string/label_game_rating" />
+
+                <TextView
+                    android:id="@+id/gameDetailsRating"
+                    style="@style/ValueStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
+                <TextView
+                    style="@style/LabelStyle"
+                    android:text="@string/label_game_keywords" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/gameDetailsKeywords"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

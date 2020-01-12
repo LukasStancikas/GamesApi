@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 @Parcelize
 data class Cover(
-    @PrimaryKey val id: Int,
+    @PrimaryKey val id: Long,
     val url: String,
     val game: Int
 ) : Parcelable {
