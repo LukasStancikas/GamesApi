@@ -21,7 +21,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideStarWarsService(
+    fun provideApi(
         okHttpClient: OkHttpClient,
         converterFactory: GsonConverterFactory
     ): Api = Retrofit.Builder()
