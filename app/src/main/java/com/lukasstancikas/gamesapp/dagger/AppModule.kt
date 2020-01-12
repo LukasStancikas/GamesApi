@@ -32,7 +32,6 @@ class AppModule {
         .build()
         .create()
 
-
     @Provides
     fun provideOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
@@ -53,7 +52,6 @@ class AppModule {
                     HttpLoggingInterceptor.Level.NONE
                 }
         }
-
 
     @Provides
     fun provideHeaderInterceptor() = HeaderInterceptor()
