@@ -3,12 +3,11 @@ package com.lukasstancikas.gamesapp.network
 import android.annotation.SuppressLint
 import com.lukasstancikas.gamesapp.model.Game
 import com.lukasstancikas.gamesapp.model.Keyword
+import com.lukasstancikas.gamesapp.model.Screenshot
 import com.lukasstancikas.gamesapp.model.database.AppDatabase
 import com.lukasstancikas.gamesapp.util.asDriver
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Single
-import io.reactivex.rxkotlin.Singles
 import io.reactivex.rxkotlin.subscribeBy
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -21,16 +20,11 @@ class RepositoryControllerImpl(
 
     @SuppressLint("CheckResult")
     override fun getGames(): Flowable<List<Game>> {
-        val fields = "name,rating,cover.*,summary,keywords;"
+        val fields = "name,rating,cover.*,summary,keywords.*,screenshots.*;"
         val requestBody = RequestBody.create(MediaType.parse("text/plain"), "fields $fields")
 
-        Singles.zip(
-            api.getGames(requestBody),
-            getKeywordsFromApi()
-        )
-            .flatMapCompletable {
-                insertToDb(it.first, it.second)
-            }
+        api.getGames(requestBody)
+            .flatMapCompletable(::insertToDb)
             .asDriver()
             .subscribeBy(
                 onError = Timber::e
@@ -38,27 +32,28 @@ class RepositoryControllerImpl(
         return getGamesFromDb()
     }
 
-    override fun getKeywordsForGame(game: Game): Single<List<Keyword>> {
-        return game.keywordIds?.let {
-            db.keywordDao().getAllFromGame(it)
-        } ?: Single.just(emptyList())
+    override fun getKeywordsForGame(game: Game): Flowable<List<Keyword>> {
+        return db.keywordDao().getAllFromGame(game.id)
     }
 
-    private fun getKeywordsFromApi(): Single<List<Keyword>> {
-        val fields = "name;"
-        val requestBody = RequestBody.create(MediaType.parse("text/plain"), "fields $fields")
-        return api.getKeywords(requestBody)
+    override fun getScreenshotsForGame(game: Game): Flowable<List<Screenshot>> {
+        return db.screenshotDao().getAllFromGame(game.id)
     }
 
-    private fun insertToDb(games: List<Game>, keywords: List<Keyword>): Completable {
+    private fun insertToDb(games: List<Game>): Completable {
         val insertKeywords =
-            db.keywordDao().insertAll(keywords)
+            db.keywordDao().insertAll(games.flatMap { game ->
+                game.keywords.orEmpty().map { it.copy(game = game.id) }
+            })
+        val insertScreenshots =
+            db.screenshotDao().insertAll(games.flatMap { game -> game.screenshots.orEmpty() })
         val insertCovers =
             db.coverDao().insertAll(games.map { it.cover }.filterNotNull())
         val insertGames =
             db.gameDao().insertAll(games)
 
-        return insertKeywords
+        return insertScreenshots
+            .concatWith(insertKeywords)
             .concatWith(insertCovers)
             .concatWith(insertGames)
             .ignoreElements()

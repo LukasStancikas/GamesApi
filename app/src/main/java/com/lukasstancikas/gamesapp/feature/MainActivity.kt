@@ -6,8 +6,9 @@ import androidx.fragment.app.Fragment
 import com.lukasstancikas.gamesapp.R
 import com.lukasstancikas.gamesapp.feature.gamedetails.GameDetailsFragment
 import com.lukasstancikas.gamesapp.feature.gamelist.GameListFragment
-import com.lukasstancikas.gamesapp.model.Cover
+import com.lukasstancikas.gamesapp.feature.gamescreenshot.GameScreenshotFragment
 import com.lukasstancikas.gamesapp.model.Game
+import com.lukasstancikas.gamesapp.model.Screenshot
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
@@ -34,6 +35,15 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             R.id.fragmentContainer, GameDetailsFragment.getInstance(game)
         )
         transaction.addToBackStack(GameDetailsFragment.TAG)
+        transaction.commit()
+    }
+
+    fun onScreenshotClicked(screenshot: Screenshot) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(
+            R.id.fragmentContainer, GameScreenshotFragment.getInstance(screenshot)
+        )
+        transaction.addToBackStack(GameScreenshotFragment.TAG)
         transaction.commit()
     }
 }

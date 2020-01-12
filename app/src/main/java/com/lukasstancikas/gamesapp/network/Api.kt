@@ -11,9 +11,6 @@ interface Api {
     @POST("games")
     fun getGames(@Body fieldsBody: RequestBody): Single<List<Game>>
 
-    @POST("keywords")
-    fun getKeywords(@Body fieldsBody: RequestBody): Single<List<Keyword>>
-
     companion object {
         const val BASE_URL = "https://api-v3.igdb.com"
     }

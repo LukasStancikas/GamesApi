@@ -4,7 +4,6 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Entity
@@ -15,22 +14,22 @@ data class Game(
     val rating: Double = 0.0,
     val summary: String?,
     @Ignore val cover: Cover?,
-    @SerializedName("keywords")
-    val keywordIds: List<Long>?
+    @Ignore val keywords: List<Keyword>?,
+    @Ignore val screenshots: List<Screenshot>?
 ) : Parcelable {
 
     constructor(
         id: Long,
         name: String,
         rating: Double,
-        summary: String?,
-        keywordIds: List<Long>?
+        summary: String?
     ) : this(
         id,
         name,
         rating,
         summary,
         null,
-        keywordIds
+        null,
+        null
     )
 }

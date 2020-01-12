@@ -14,8 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="@color/colorPrimary"
-            app:expandedTitleTextAppearance="@style/BoldToolbar"
             app:expandedTitleGravity="bottom"
+            app:expandedTitleTextAppearance="@style/BoldToolbar"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <ImageView
@@ -23,8 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
                 android:maxHeight="200dp"
+                android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.5" />
 
@@ -54,8 +54,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_game_label_side"
                 android:divider="@drawable/divider_card_label"
-                android:showDividers="middle"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:showDividers="middle">
 
                 <TextView
                     style="@style/LabelStyle"
@@ -84,6 +84,17 @@
                     android:id="@+id/gameDetailsKeywords"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+                <TextView
+                    style="@style/LabelStyle"
+                    android:text="@string/label_game_screenshots" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/gameDetailsScreenshotsRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

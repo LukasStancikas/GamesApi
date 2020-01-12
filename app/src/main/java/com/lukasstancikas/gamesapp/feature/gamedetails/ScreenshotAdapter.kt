@@ -1,4 +1,4 @@
-package com.lukasstancikas.gamesapp.feature.gamelist
+package com.lukasstancikas.gamesapp.feature.gamedetails
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +9,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.lukasstancikas.gamesapp.R
 import com.lukasstancikas.gamesapp.model.Game
+import com.lukasstancikas.gamesapp.model.Screenshot
 import kotlinx.android.synthetic.main.item_game.view.*
+import kotlinx.android.synthetic.main.item_screenshot.view.*
 
-class GameAdapter : RecyclerView.Adapter<GameAdapter.MyViewHolder>() {
-    private val items = mutableListOf<Game>()
+class ScreenshotAdapter : RecyclerView.Adapter<ScreenshotAdapter.MyViewHolder>() {
+    private val items = mutableListOf<Screenshot>()
     private var itemClickListener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(
@@ -20,30 +22,27 @@ class GameAdapter : RecyclerView.Adapter<GameAdapter.MyViewHolder>() {
         viewType: Int
     ): MyViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_game, parent, false)
+            .inflate(R.layout.item_screenshot, parent, false)
         return MyViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.itemView.itemGameTitle.text = items[position].name
-        holder.itemView.itemGameRating.text = items[position].rating.toString()
-        holder.itemView.itemGameSummary.text = items[position].summary
         holder.itemView.setOnClickListener {
             itemClickListener?.onClick(items[position])
         }
         Glide
             .with(holder.itemView.context)
-            .load(items[position].cover?.trimmedUrl())
+            .load(items[position].trimmedUrl())
             .placeholder(R.drawable.ic_photo)
             .error(R.drawable.ic_error)
             .centerInside()
             .transition(DrawableTransitionOptions.withCrossFade())
-            .into(holder.itemView.itemGameCover)
+            .into(holder.itemView.gameDetailsScreenshot)
     }
 
     override fun getItemCount() = items.size
 
-    fun setItems(newItems: List<Game>) {
+    fun setItems(newItems: List<Screenshot>) {
         val diffResult = DiffUtil.calculateDiff(ItemDiffCallback(items, newItems))
         items.clear()
         items.addAll(newItems)
@@ -57,10 +56,10 @@ class GameAdapter : RecyclerView.Adapter<GameAdapter.MyViewHolder>() {
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     interface OnItemClickListener {
-        fun onClick(item: Game)
+        fun onClick(item: Screenshot)
     }
 
-    private class ItemDiffCallback(val oldItems: List<Game>, val newItems: List<Game>) :
+    private class ItemDiffCallback(val oldItems: List<Screenshot>, val newItems: List<Screenshot>) :
         DiffUtil.Callback() {
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             return oldItems[oldItemPosition] == newItems[newItemPosition]

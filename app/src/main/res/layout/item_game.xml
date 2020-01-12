@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_card_view"
+    android:foreground="?android:attr/selectableItemBackground"
     app:cardElevation="@dimen/elevation_card_view">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -58,8 +59,8 @@
             android:divider="@drawable/divider_card_label"
             android:orientation="vertical"
             android:showDividers="middle"
-            app:layout_constraintStart_toEndOf="@+id/gameLabelBarrier"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/gameLabelBarrier"
             app:layout_constraintTop_toTopOf="@+id/gameLabelContainer">
 
             <TextView

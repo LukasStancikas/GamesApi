@@ -14,19 +14,20 @@ import com.google.android.material.chip.Chip
 import com.jakewharton.rxbinding3.swiperefreshlayout.refreshes
 import com.lukasstancikas.gamesapp.R
 import com.lukasstancikas.gamesapp.dagger.InjectableFragment
+import com.lukasstancikas.gamesapp.feature.MainActivity
 import com.lukasstancikas.gamesapp.model.Game
 import com.lukasstancikas.gamesapp.model.Keyword
 import com.lukasstancikas.gamesapp.model.NetworkRequest
+import com.lukasstancikas.gamesapp.model.Screenshot
 import com.lukasstancikas.gamesapp.util.argument
 import com.lukasstancikas.gamesapp.util.injectViewModel
 import com.lukasstancikas.gamesapp.util.showShortSnackbar
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.fragment_game_details.*
-import kotlinx.android.synthetic.main.fragment_game_list.*
 import javax.inject.Inject
 
-class GameDetailsFragment : Fragment(), InjectableFragment {
+class GameDetailsFragment : Fragment(), InjectableFragment, ScreenshotAdapter.OnItemClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -34,6 +35,11 @@ class GameDetailsFragment : Fragment(), InjectableFragment {
     private lateinit var viewModel: GameDetailsViewModel
 
     private val game: Game by argument(KEY_GAME)
+    private val adapter by lazy {
+        ScreenshotAdapter().apply {
+            setOnItemClickListener(this@GameDetailsFragment)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +52,7 @@ class GameDetailsFragment : Fragment(), InjectableFragment {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        gameDetailsScreenshotsRecycler.adapter = adapter
         gameDetailsToolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
@@ -57,6 +64,10 @@ class GameDetailsFragment : Fragment(), InjectableFragment {
         viewModel.refreshData(game)
         subscribeToViewModelStreams()
         subscribeViewInteractions()
+    }
+
+    override fun onClick(item: Screenshot) {
+        (activity as? MainActivity)?.onScreenshotClicked(item)
     }
 
     @SuppressLint("CheckResult")
@@ -76,10 +87,9 @@ class GameDetailsFragment : Fragment(), InjectableFragment {
             gameDetailsCollapsingLayout.title = game.name
             Glide
                 .with(gameDetailsCover.context)
-                .load(game.cover?.trimmedCoverUrl())
+                .load(game.cover?.trimmedUrl())
                 .placeholder(R.drawable.ic_photo)
                 .error(R.drawable.ic_error)
-                .centerInside()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(gameDetailsCover)
         } else {
@@ -94,6 +104,12 @@ class GameDetailsFragment : Fragment(), InjectableFragment {
             .keywordStream
             .observe(this, Observer {
                 createKeywordChips(it)
+            })
+
+        viewModel
+            .screenshotStream
+            .observe(this, Observer {
+                adapter.setItems(it)
             })
 
         viewModel
@@ -113,8 +129,10 @@ class GameDetailsFragment : Fragment(), InjectableFragment {
     private fun createKeywordChips(items: List<Keyword>) {
         gameDetailsKeywords.removeAllViews()
         items.forEach {
-            val chip = LayoutInflater.from(gameDetailsKeywords.context).inflate(R.layout.item_keyword, gameDetailsKeywords, true)
+            val chip = LayoutInflater.from(gameDetailsKeywords.context)
+                .inflate(R.layout.item_keyword, gameDetailsKeywords, false)
             (chip as? Chip)?.text = it.name
+            gameDetailsKeywords.addView(chip)
         }
     }
 

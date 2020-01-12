@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Entity
 @Parcelize
-data class Cover(
+data class Screenshot(
     @PrimaryKey val id: Long,
     val url: String,
     val game: Int

@@ -9,5 +9,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Keyword(
     @PrimaryKey val id: Long,
-    val name: String
+    val name: String,
+    val game: Long
 ) : Parcelable
